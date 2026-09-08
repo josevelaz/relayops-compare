@@ -107,8 +107,9 @@
 
       <h2>Sessions</h2>
       <p>
-        Both agents started at 12:42 on 8 September 2026 and reached idle around 15:15.
-        Wall-clock length is almost identical. Token use is not.
+        Both agents received the same prompt at 12:42:35 on 8 September 2026.
+        Muse Spark declared the product complete at 13:38. Astra kept building until 14:43.
+        Spark finished about <strong>1 hour 5 minutes earlier</strong>.
       </p>
       <table>
         <thead>
@@ -125,37 +126,37 @@
             <td>Muse Spark 1.3 Free · high</td>
           </tr>
           <tr>
-            <td>Session start</td>
-            <td class="num">12:42:34</td>
+            <td>Prompt received</td>
+            <td class="num">12:42:35</td>
             <td class="num">12:42:35</td>
           </tr>
           <tr>
-            <td>Session idle</td>
-            <td class="num">15:15:29</td>
-            <td class="num">15:15:40</td>
+            <td>Declared complete</td>
+            <td class="num">14:43:40</td>
+            <td class="num">13:38:20</td>
           </tr>
           <tr>
-            <td>Wall clock</td>
-            <td class="num">2 h 33 min</td>
-            <td class="num">2 h 33 min</td>
+            <td>Time to complete</td>
+            <td class="num">2 h 1 min</td>
+            <td class="num">56 min</td>
           </tr>
           <tr>
-            <td>Messages</td>
-            <td class="num">135 (1 user, 116 assistant)</td>
-            <td class="num">236 (2 user, 219 assistant)</td>
+            <td>Assistant messages (full session)</td>
+            <td class="num">116</td>
+            <td class="num">219</td>
           </tr>
           <tr>
-            <td>Input tokens</td>
+            <td>Input tokens (full session)</td>
             <td class="num">667,937</td>
             <td class="num">2,240,520</td>
           </tr>
           <tr>
-            <td>Output tokens</td>
+            <td>Output tokens (full session)</td>
             <td class="num">104,420</td>
             <td class="num">138,862</td>
           </tr>
           <tr>
-            <td>Reasoning tokens</td>
+            <td>Reasoning tokens (full session)</td>
             <td class="num">14,053</td>
             <td class="num">31,593</td>
           </tr>
@@ -167,9 +168,10 @@
         </tbody>
       </table>
       <p class="note">
-        Session times and token counts come from the OpenCode session store.
+        “Declared complete” is the first wrap-up message after the original prompt.
+        Spark then sat idle until 14:23, when a second prompt asked it to build production.
+        Both sessions later received OpenCode restart noise around 15:14. Token counts include that extra activity.
         Source lines count TypeScript, TSX, and CSS under each app’s <code>src/</code>.
-        Spark used about 3.4× the input tokens for a similar wall-clock run.
       </p>
 
       <h2>What both got right</h2>
@@ -190,7 +192,7 @@
         <li>State persists in <code>localStorage</code> (<code>relayops-astra-v1</code>). Reloads keep created incidents and edits.</li>
         <li>Incident, alert, and settings screens go deeper: bulk alert ack, CSV export, incident configuration, member invite.</li>
         <li>Accessibility work is visible: labeled dialogs, <code>aria-current</code> on nav, chart <code>aria-label</code>s, skip and focus handling.</li>
-        <li>Fewer tokens and fewer assistant turns for more source. The session was more compact.</li>
+        <li>Fewer tokens than Spark for more source. The session was denser, but it took much longer.</li>
       </ul>
 
       <h2>Astra — where it failed</h2>
@@ -216,14 +218,14 @@
         <li><code>@stylexjs/unplugin</code> peers conflict with TanStack’s <code>unplugin</code> 3. GitHub Pages <code>npm ci</code> failed until <code>legacy-peer-deps</code> was added.</li>
         <li>The StyleX Vite plugin is constructed with <code>dev: true</code> even for production builds.</li>
         <li>Index routes use trailing slashes (<code>/alerts/</code>). That is valid, but it is a sharp edge for links and GitHub Pages.</li>
-        <li>The session used far more input tokens and almost twice as many assistant messages to ship about half the source lines. Context use was inefficient.</li>
+        <li>The full session still used far more input tokens (about 3.4× Astra) and more assistant messages to ship about half the source lines. Context use was inefficient even though it finished first.</li>
       </ul>
 
       <h2>Judgment</h2>
       <p>
-        Both agents finished a complete product in the same 2 hours 33 minutes.
-        Astra spent tokens more carefully and built a denser, persistent workspace, at the cost of a catch-all router and oversized files.
-        Spark produced a cleaner route tree and a tighter incident command surface, at the cost of no persistence, a dependency conflict, and much higher token burn.
+        Spark shipped a complete product in 56 minutes. Astra needed 2 hours 1 minute.
+        Astra spent tokens more carefully and built a denser, persistent workspace, at the cost of time, a catch-all router, and oversized files.
+        Spark was faster and produced a cleaner route tree, at the cost of no persistence, a dependency conflict, and much higher token burn per line of code.
       </p>
       <p>
         Neither submission is a screenshot. Filters, search, create-incident, and INC-1042 all behave as applications.
