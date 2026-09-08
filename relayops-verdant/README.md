@@ -2,6 +2,8 @@
 
 A connected incident management and operational intelligence workspace for Northstar Labs.
 
+Built from the shared brief in [PROMPT.md](../PROMPT.md).
+
 ## Run locally
 
 Requires Node.js 22.12 or later.
