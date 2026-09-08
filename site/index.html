@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RelayOps · Design comparison</title>
+    <meta
+      name="description"
+      content="Compare two independent RelayOps designs. A random design loads first. Click the blurred label to reveal which one you are viewing."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%23111111'/%3E%3Ccircle cx='6' cy='8' r='2.2' fill='%236ba1e6'/%3E%3Ccircle cx='10' cy='8' r='2.2' fill='%23EE7948'/%3E%3C/svg%3E" />
+    <style>
+      :root {
+        --bg: #0b0c0e;
+        --bar: #121317;
+        --line: #2a2c33;
+        --text: #f2f3f5;
+        --muted: #8b8f98;
+        --chip: #1b1d22;
+        --focus: #6ba1e6;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+
+      body {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        min-height: 100dvh;
+      }
+
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 48px;
+        padding: 8px 14px;
+        background: var(--bar);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        min-width: 0;
+        margin-right: auto;
+      }
+
+      .brand strong {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .brand span {
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      button, .btn {
+        appearance: none;
+        border: 1px solid var(--line);
+        background: var(--chip);
+        color: var(--text);
+        font: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        height: 32px;
+        padding: 0 11px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      button:hover, .btn:hover { border-color: #3d4048; }
+
+      button:focus-visible, .btn:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      .reveal {
+        min-width: 168px;
+        justify-content: center;
+        position: relative;
+      }
+
+      .reveal .name {
+        display: inline-block;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        transition: filter 160ms ease, opacity 160ms ease;
+      }
+
+      .reveal.is-hidden .name {
+        filter: blur(9px);
+        user-select: none;
+        pointer-events: none;
+      }
+
+      .reveal .hint {
+        position: absolute;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 650;
+        color: var(--muted);
+      }
+
+      .reveal.is-hidden .hint { display: flex; }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #fff;
+      }
+
+      .status {
+        display: none;
+        place-items: center;
+        padding: 32px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .status.show { display: grid; }
+
+      @media (max-width: 720px) {
+        .brand span { display: none; }
+        .reveal { min-width: 140px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bar">
+      <div class="brand">
+        <strong>RelayOps</strong>
+        <span>Blind design comparison</span>
+      </div>
+      <div class="actions">
+        <button type="button" id="switch-btn">Switch design</button>
+        <a class="btn" id="open-btn" href="#" target="_blank" rel="noreferrer">Open</a>
+        <button
+          type="button"
+          class="reveal is-hidden"
+          id="reveal-btn"
+          aria-label="Reveal which design is showing"
+        >
+          <span class="name" id="design-name" aria-hidden="true">Astra</span>
+          <span class="hint">Click to reveal</span>
+        </button>
+      </div>
+    </header>
+    <iframe id="frame" title="RelayOps design"></iframe>
+    <p class="status" id="status" hidden></p>
+    <script>
+      const DESIGNS = [
+        {
+          id: "astra",
+          name: "Astra",
+          local: "http://localhost:3001/",
+          pages: "./astra/",
+        },
+        {
+          id: "spark",
+          name: "Spark",
+          local: "http://localhost:3002/",
+          pages: "./spark/",
+        },
+      ];
+
+      const local =
+        location.hostname === "localhost" || location.hostname === "127.0.0.1";
+
+      const frame = document.getElementById("frame");
+      const revealBtn = document.getElementById("reveal-btn");
+      const nameEl = document.getElementById("design-name");
+      const switchBtn = document.getElementById("switch-btn");
+      const openBtn = document.getElementById("open-btn");
+      const status = document.getElementById("status");
+
+      let current = DESIGNS[Math.floor(Math.random() * DESIGNS.length)];
+      let revealed = false;
+
+      function srcFor(design) {
+        return local ? design.local : design.pages;
+      }
+
+      function apply() {
+        nameEl.textContent = current.name;
+        frame.src = srcFor(current);
+        openBtn.href = srcFor(current);
+        revealBtn.classList.toggle("is-hidden", !revealed);
+        revealBtn.setAttribute(
+          "aria-label",
+          revealed ? current.name : "Reveal which design is showing",
+        );
+        nameEl.setAttribute("aria-hidden", revealed ? "false" : "true");
+      }
+
+      revealBtn.addEventListener("click", () => {
+        revealed = true;
+        apply();
+      });
+
+      switchBtn.addEventListener("click", () => {
+        current = DESIGNS.find((d) => d.id !== current.id);
+        revealed = false;
+        apply();
+      });
+
+      frame.addEventListener("error", () => {
+        status.hidden = false;
+        status.classList.add("show");
+        status.textContent = local
+          ? "This design is not running. Start it with npm run hub or npm run dev."
+          : "This design is missing from the GitHub Pages build.";
+      });
+
+      apply();
+    </script>
+  </body>
+</html>

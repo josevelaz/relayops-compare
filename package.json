@@ -1,0 +1,13 @@
+{
+  "name": "relayops-benchmark",
+  "private": true,
+  "description": "Side-by-side RelayOps implementations. Each app is isolated.",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "hub": "node scripts/hub.mjs",
+    "pages:build": "node scripts/build-pages.mjs",
+    "dev:astra": "npm run dev --prefix relayops-astra",
+    "dev:spark": "npm run dev --prefix relayops-spark",
+    "dev:verdant": "npm run dev --prefix relayops-verdant"
+  }
+}

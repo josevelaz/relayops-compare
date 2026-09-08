@@ -1,0 +1,14 @@
+node_modules
+.output
+.vinxi
+.tanstack
+.nitro
+.browser-cache
+.npm-cache
+dist
+.DS_Store
+*.log
+.vite
+.turbo
+coverage
+site-dist
