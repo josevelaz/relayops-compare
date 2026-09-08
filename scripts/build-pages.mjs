@@ -48,9 +48,9 @@ mkdirSync(out, { recursive: true });
 for (const app of apps) {
   console.log(`\nBuilding ${app.id} for GitHub Pages (base ${pagesBase}${app.id}/)`);
   if (process.env.CI) {
-    run("npm", ["ci"], app.dir);
+    run("npm", ["ci", "--legacy-peer-deps"], app.dir);
   } else if (!existsSync(path.join(app.dir, "node_modules"))) {
-    run("npm", ["install"], app.dir);
+    run("npm", ["install", "--legacy-peer-deps"], app.dir);
   }
   run("npm", ["run", "build"], app.dir, {
     PAGES: "1",
