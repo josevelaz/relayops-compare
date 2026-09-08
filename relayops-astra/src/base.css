@@ -1,0 +1,130 @@
+@layer reset, base;
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button {
+    cursor: pointer;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    margin: 0;
+  }
+  button {
+    color: inherit;
+  }
+}
+@layer base {
+  :root {
+    font-family:
+      "Inter Variable",
+      Inter,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+    color: #25332f;
+    background: #f7f8fa;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  button {
+    background: none;
+    border: none;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  :focus-visible {
+    outline: 3px solid #53aa8a;
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: #d5eee2;
+  }
+  input,
+  textarea,
+  select {
+    min-width: 0;
+  }
+  textarea {
+    resize: vertical;
+  }
+  summary {
+    cursor: pointer;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th {
+    text-align: left;
+  }
+  svg {
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #ced5d1;
+    border-radius: 10px;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pulse {
+    50% {
+      box-shadow: 0 0 0 4px #d6eae0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
