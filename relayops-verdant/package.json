@@ -1,0 +1,29 @@
+{
+  "name": "relayops-verdant",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 3000",
+    "typecheck": "tsr generate && tsc --noEmit"
+  },
+  "dependencies": {
+    "@stylexjs/stylex": "^0.18.1",
+    "@tanstack/react-router": "latest",
+    "@tanstack/react-start": "latest",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tanstack/router-cli": "latest",
+    "@stylexjs/unplugin": "^0.18.1",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0"
+  }
+}
