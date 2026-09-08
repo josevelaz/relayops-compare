@@ -162,6 +162,7 @@
         <span>Blind design comparison</span>
       </div>
       <div class="actions">
+        <a class="btn" id="audit-link" href="audit.html">Audit</a>
         <button type="button" id="switch-btn">Switch design</button>
         <a class="btn" id="open-btn" href="#" target="_blank" rel="noreferrer">Open</a>
         <button
@@ -178,23 +179,32 @@
     <iframe id="frame" title="RelayOps design"></iframe>
     <p class="status" id="status" hidden></p>
     <script>
+      function pageUrl(file) {
+        const segs = location.pathname.split("/").filter(Boolean);
+        if (segs.length && /\.[a-zA-Z0-9]+$/.test(segs[segs.length - 1])) segs.pop();
+        const prefix = segs.length ? "/" + segs.join("/") : "";
+        return (prefix + "/" + file).replace(/\/{2,}/g, "/");
+      }
+
       const DESIGNS = [
         {
           id: "astra",
           name: "Astra",
           local: "http://localhost:3001/",
-          pages: "./astra/",
+          pages: pageUrl("astra/"),
         },
         {
           id: "spark",
           name: "Spark",
           local: "http://localhost:3002/",
-          pages: "./spark/",
+          pages: pageUrl("spark/"),
         },
       ];
 
       const local =
         location.hostname === "localhost" || location.hostname === "127.0.0.1";
+
+      document.getElementById("audit-link").href = pageUrl("audit.html");
 
       const frame = document.getElementById("frame");
       const revealBtn = document.getElementById("reveal-btn");

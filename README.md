@@ -6,6 +6,8 @@ Each app was built from the same brief: [PROMPT.md](PROMPT.md).
 
 Live comparison: [josevelaz.github.io/relayops-compare](https://josevelaz.github.io/relayops-compare/)
 
+Agent audit: [josevelaz.github.io/relayops-compare/audit.html](https://josevelaz.github.io/relayops-compare/audit.html)
+
 ## Implementations
 
 | App | Directory | Local port |

@@ -69,6 +69,10 @@ for (const app of apps) {
   }
 }
 
-cpSync(path.join(root, "site", "index.html"), path.join(out, "index.html"));
+const siteDir = path.join(root, "site");
+for (const name of ["index.html", "audit.html"]) {
+  const from = path.join(siteDir, name);
+  if (existsSync(from)) cpSync(from, path.join(out, name));
+}
 writeFileSync(path.join(out, ".nojekyll"), "");
 console.log(`\nGitHub Pages site written to ${out}`);

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RelayOps · Agent audit</title>
+    <meta
+      name="description"
+      content="Audit of two independent RelayOps builds: GPT-6 Astra xhigh and Muse Spark 1.3 Free."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%23111111'/%3E%3Ccircle cx='6' cy='8' r='2.2' fill='%236ba1e6'/%3E%3Ccircle cx='10' cy='8' r='2.2' fill='%23EE7948'/%3E%3C/svg%3E" />
+    <style>
+      :root {
+        --bg: #0b0c0e;
+        --bar: #121317;
+        --line: #2a2c33;
+        --text: #f2f3f5;
+        --muted: #8b8f98;
+        --chip: #1b1d22;
+        --focus: #6ba1e6;
+        --ok: #7dcea0;
+        --bad: #e07a7a;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 48px;
+        padding: 8px 14px;
+        background: var(--bar);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+      }
+      .brand { display: flex; align-items: baseline; gap: 8px; margin-right: auto; }
+      .brand strong { font-size: 14px; letter-spacing: -0.02em; }
+      .brand span { color: var(--muted); font-size: 12px; }
+      .btn {
+        border: 1px solid var(--line);
+        background: var(--chip);
+        color: var(--text);
+        font: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        height: 32px;
+        padding: 0 11px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+      }
+      .btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 36px 20px 80px;
+      }
+      h1 { font-size: 28px; letter-spacing: -0.03em; margin: 0 0 8px; }
+      .lede { color: var(--muted); margin: 0 0 28px; }
+      h2 { font-size: 18px; margin: 36px 0 10px; letter-spacing: -0.02em; }
+      p, li { font-size: 15px; }
+      a { color: var(--focus); }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin: 14px 0 8px;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+      td.num { font-variant-numeric: tabular-nums; }
+      .ok { color: var(--ok); }
+      .bad { color: var(--bad); }
+      ul { padding-left: 1.15em; }
+      .note { color: var(--muted); font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <header class="bar">
+      <div class="brand">
+        <strong>RelayOps</strong>
+        <span>Agent audit</span>
+      </div>
+      <a class="btn" id="home-link" href="./">Compare designs</a>
+    </header>
+    <main>
+      <h1>Audit of both agents</h1>
+      <p class="lede">
+        Two OpenCode sessions received the same
+        <a href="https://github.com/josevelaz/relayops-compare/blob/main/PROMPT.md">RelayOps brief</a>
+        at the same time. They could not share files. This page records what each
+        session produced, how long it ran, and where it fell short.
+      </p>
+
+      <h2>Sessions</h2>
+      <p>
+        Both agents started at 12:42 on 8 September 2026 and reached idle around 15:15.
+        Wall-clock length is almost identical. Token use is not.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Astra</th>
+            <th>Spark</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Model</td>
+            <td>GPT-6 Astra · xhigh</td>
+            <td>Muse Spark 1.3 Free · high</td>
+          </tr>
+          <tr>
+            <td>Session start</td>
+            <td class="num">12:42:34</td>
+            <td class="num">12:42:35</td>
+          </tr>
+          <tr>
+            <td>Session idle</td>
+            <td class="num">15:15:29</td>
+            <td class="num">15:15:40</td>
+          </tr>
+          <tr>
+            <td>Wall clock</td>
+            <td class="num">2 h 33 min</td>
+            <td class="num">2 h 33 min</td>
+          </tr>
+          <tr>
+            <td>Messages</td>
+            <td class="num">135 (1 user, 116 assistant)</td>
+            <td class="num">236 (2 user, 219 assistant)</td>
+          </tr>
+          <tr>
+            <td>Input tokens</td>
+            <td class="num">667,937</td>
+            <td class="num">2,240,520</td>
+          </tr>
+          <tr>
+            <td>Output tokens</td>
+            <td class="num">104,420</td>
+            <td class="num">138,862</td>
+          </tr>
+          <tr>
+            <td>Reasoning tokens</td>
+            <td class="num">14,053</td>
+            <td class="num">31,593</td>
+          </tr>
+          <tr>
+            <td>Source lines</td>
+            <td class="num">12,341</td>
+            <td class="num">5,816</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">
+        Session times and token counts come from the OpenCode session store.
+        Source lines count TypeScript, TSX, and CSS under each app’s <code>src/</code>.
+        Spark used about 3.4× the input tokens for a similar wall-clock run.
+      </p>
+
+      <h2>What both got right</h2>
+      <ul>
+        <li>Every required navigation area exists: Overview, Incidents, Alerts, Services, Deployments, On-call, Analytics, Postmortems, Teams, Settings.</li>
+        <li>StyleX is the styling system. Neither used Tailwind or a prebuilt component kit.</li>
+        <li>Seeded data is internally consistent. INC-1042, Payment Gateway, Sarah Chen, and the rollback of <code>payment-gateway@4.18.2</code> appear in incidents, services, alerts, and deployments.</li>
+        <li>INC-1042 is a working incident workspace: status, timeline, responders, tasks, related alerts, related deploys, and customer updates.</li>
+        <li>Payment Gateway and the Payments team have detail views.</li>
+        <li>Postmortems can be opened and edited. Users can create an incident from the UI.</li>
+        <li>Search and filters change visible results. Dialogs open and close.</li>
+        <li>Each session ran a reviewer subagent near the end. Neither of these two sessions called the UI designer.</li>
+      </ul>
+
+      <h2>Astra — where it succeeded</h2>
+      <ul>
+        <li>Higher information density. The overview reads as an operations console, not a grid of stat cards.</li>
+        <li>State persists in <code>localStorage</code> (<code>relayops-astra-v1</code>). Reloads keep created incidents and edits.</li>
+        <li>Incident, alert, and settings screens go deeper: bulk alert ack, CSV export, incident configuration, member invite.</li>
+        <li>Accessibility work is visible: labeled dialogs, <code>aria-current</code> on nav, chart <code>aria-label</code>s, skip and focus handling.</li>
+        <li>Fewer tokens and fewer assistant turns for more source. The session was more compact.</li>
+      </ul>
+
+      <h2>Astra — where it failed</h2>
+      <ul>
+        <li>Routing is a catch-all <code>/$</code> page that splits <code>pathname</code>. It works, but it is not file-based TanStack routing. Deep links are not first-class routes.</li>
+        <li>Several files are too large for the brief’s maintainability bar: <code>Incidents.tsx</code> (~1,510 lines), <code>data.ts</code> (~1,305), <code>ui.tsx</code> (~1,199).</li>
+        <li>The local machine accumulated a Playwright browser cache (~1 GB) during the session. That is not in git, but it is leftover process waste.</li>
+      </ul>
+
+      <h2>Spark — where it succeeded</h2>
+      <ul>
+        <li>File-based routes for list and detail pages (<code>/incidents/$incidentId</code>, <code>/services/$serviceId</code>, and the rest). This matches TanStack Start practice.</li>
+        <li>A smaller, clearer module split: tokens, model, store, shell, command palette, create-incident modal.</li>
+        <li>Keyboard use is explicit: <kbd>⌘K</kbd> search, <kbd>C</kbd> create incident, <kbd>/</kbd> search.</li>
+        <li>The incident workspace is easy to scan: status and severity controls, timeline, tasks, and customer/internal comms on one screen.</li>
+        <li>The data model is one file of related records, so service health, alerts, and deploys stay aligned.</li>
+      </ul>
+
+      <h2>Spark — where it failed</h2>
+      <ul>
+        <li>No persistence. Incident creates, acks, and edits reset on reload.</li>
+        <li>Incident notes always post as Sarah Chen, not as the signed-in user.</li>
+        <li><code>@stylexjs/unplugin</code> peers conflict with TanStack’s <code>unplugin</code> 3. GitHub Pages <code>npm ci</code> failed until <code>legacy-peer-deps</code> was added.</li>
+        <li>The StyleX Vite plugin is constructed with <code>dev: true</code> even for production builds.</li>
+        <li>Index routes use trailing slashes (<code>/alerts/</code>). That is valid, but it is a sharp edge for links and GitHub Pages.</li>
+        <li>The session used far more input tokens and almost twice as many assistant messages to ship about half the source lines. Context use was inefficient.</li>
+      </ul>
+
+      <h2>Judgment</h2>
+      <p>
+        Both agents finished a complete product in the same 2 hours 33 minutes.
+        Astra spent tokens more carefully and built a denser, persistent workspace, at the cost of a catch-all router and oversized files.
+        Spark produced a cleaner route tree and a tighter incident command surface, at the cost of no persistence, a dependency conflict, and much higher token burn.
+      </p>
+      <p>
+        Neither submission is a screenshot. Filters, search, create-incident, and INC-1042 all behave as applications.
+      </p>
+    </main>
+    <script>
+      (function () {
+        const segs = location.pathname.split("/").filter(Boolean);
+        if (segs.length && /\.[a-zA-Z0-9]+$/.test(segs[segs.length - 1])) segs.pop();
+        const prefix = segs.length ? "/" + segs.join("/") : "";
+        document.getElementById("home-link").href = prefix + "/" || "/";
+      })();
+    </script>
+  </body>
+</html>

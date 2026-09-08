@@ -58,9 +58,12 @@ const types = {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url || "/", "http://127.0.0.1");
   let rel = decodeURIComponent(url.pathname);
-  if (rel === "/") rel = "/index.html";
+  if (rel === "/audit") rel = "/audit.html";
+  if (rel.endsWith("/")) rel += "index.html";
+  rel = rel.replace(/^\/+/, "");
+  if (rel === "") rel = "index.html";
   const file = path.normalize(path.join(siteDir, rel));
-  if (!file.startsWith(siteDir)) {
+  if (file !== siteDir && !file.startsWith(siteDir + path.sep)) {
     res.writeHead(403);
     res.end("Forbidden");
     return;
